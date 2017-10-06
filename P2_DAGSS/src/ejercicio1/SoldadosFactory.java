@@ -1,4 +1,4 @@
-package ejercicio2;
+package ejercicio1;
 
 public interface SoldadosFactory {
 	public Artillero crearArtillero();
