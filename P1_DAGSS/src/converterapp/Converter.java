@@ -19,7 +19,6 @@ public class Converter {
 		writer.write(transformer.header());
 		while((line = reader.getLine()) != null){
 			writer.write(transformer.transform(line));
-			System.out.println(line);
 		}
 		
 		if(line == null){
