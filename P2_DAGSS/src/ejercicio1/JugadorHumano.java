@@ -16,7 +16,7 @@ public class JugadorHumano extends Jugador {
 
 	@Override
 	public void jugar() {
-		System.out.println("Qué hago? [d=disparar, b=poner bombas, a=crear_artillero, z=crear_zapador");
+		System.out.println("Que hago? [d=disparar, b=poner bombas, a=crear_artillero, z=crear_zapador]");
 		String line;
 		try {
 			line = in.readLine();

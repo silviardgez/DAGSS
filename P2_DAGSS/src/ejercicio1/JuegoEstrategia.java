@@ -10,16 +10,14 @@ public class JuegoEstrategia {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line;
-		Jugador humano = null;
-		Jugador maquina = null;
+		Jugador humano = new JugadorHumano(new AtreidesSoldadosFactory());;
+		Jugador maquina = new JugadorMaquina(new HarkonenSoldadosFactory());
 		
 		// Pedimos el equipo al jugador
-		System.out.println("¿Qué equipo desea? [a=atreides, h=harkonen");
+		System.out.println("¿Qué equipo desea (por defecto atreides)? [a=atreides, h=harkonen]");
 		line = in.readLine();
-		if (line.startsWith("a")) {
-			humano = new JugadorHumano(new AtreidesSoldadosFactory());
-			maquina = new JugadorMaquina(new HarkonenSoldadosFactory());
-		} else if (line.startsWith("h")) {
+		
+		if (line.startsWith("h")) {
 			humano = new JugadorHumano(new HarkonenSoldadosFactory());
 			maquina = new JugadorMaquina(new AtreidesSoldadosFactory());
 		}
