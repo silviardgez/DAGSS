@@ -14,7 +14,7 @@ public class JuegoEstrategia {
 		Jugador maquina = new JugadorMaquina(new HarkonenSoldadosFactory());
 		
 		// Pedimos el equipo al jugador
-		System.out.println("¿Qué equipo desea (por defecto atreides)? [a=atreides, h=harkonen]");
+		System.out.println("Que equipo desea (por defecto atreides)? [a=atreides, h=harkonen]");
 		line = in.readLine();
 		
 		if (line.startsWith("h")) {
