@@ -1,39 +1,65 @@
 package ejercicio1;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Reader;
-import java.io.Writer;
-
-import converterapp.*;
-
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class OrdenPago {
 
-	public static void main(String[] args) {
-		
-		FileUserInterface file = new FileUserInterface();
+	public static void main(String[] args) throws FileNotFoundException {
+		final String NAME = "trabajadores.txt";
 
-		File input = file.getInputFile();
-		File output = file.getOutputFile();
+		File file = new File(NAME);
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(file);
 
-		Transformer transformer = new TABToXMLTransformer();
-		Reader reader = new FileReader(input);
-		Writer writer = new FileWriter(output);
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			String[] tokens = line.split("\t");
+			if (tokens.length != 4) {
+				throw new IllegalArgumentException("the line does not contain 4 tokens");
+			}
 
-		Converter converter = new Converter(reader, transformer, writer);
+			Nomina nomina = null;
+			// Comprobamos el tipo de nómina
+			if (tokens[1].equals("A")) {
+				nomina = new EscalaA();
+			} else if (tokens[1].equals("B")) {
+				nomina = new EscalaB();
+			} else if (tokens[1].equals("C")) {
+				nomina = new EscalaC();
+			}
 
-		converter.convert();
-		Nomina n = new EscalaA();
-		//Calcular trienios
-		int antiguedad = 6;
-		int trienios = antiguedad/3;
-		
-		n = new CargoGestion(n,true);
-		
-		System.out.println(n.calcularNomina());
+			// Comprobamos la antiguedad
+			int antiguedad = Integer.parseInt(tokens[2]);
 
+			// Calcular complementos
+			// Comprobamos sexenios
+			int sexenio = antiguedad / 6;
+			if (sexenio >= 1) {
+				nomina = new Sexenios(nomina, sexenio);
+			}
+
+			// Comprobamos quinquenios
+			int quinquenio = antiguedad / 5;
+			if (quinquenio >= 1) {
+				nomina = new Quinquenios(nomina, quinquenio);
+			}
+			// Comprobamos trienios
+			int trienio = antiguedad / 3;
+			if (trienio >= 1) {
+				nomina = new Trienios(nomina, trienio);
+			}
+
+			// Comprobamos si participó en cargos de gestión
+			if (tokens[3].equals("SI")) {
+				nomina = new CargoGestion(nomina);
+			}
+
+			//Mostramos por pantalla las órdenes de pago
+			System.out.println(tokens[0] + " " + nomina.calcularNomina());
+
+		}
 	}
 
 }

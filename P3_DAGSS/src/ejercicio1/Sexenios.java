@@ -1,15 +1,14 @@
 package ejercicio1;
 
-public class Sexenios {
-	private Nomina base;
+public class Sexenios extends Complemento {
 	private int num;
 	
 	public Sexenios(Nomina base, int num){
-		this.base = base;
+		super(base);
 		this.num = num;
 	}
 	
 	public float calcularNomina(){
-		return this.base.calcularNomina() + 50*this.num;
+		return getNomina().calcularNomina() + 50*this.num;
 	}
 }

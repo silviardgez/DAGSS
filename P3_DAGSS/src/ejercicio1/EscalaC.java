@@ -1,9 +1,10 @@
 package ejercicio1;
 
-public class EscalaB implements Nomina {
+public class EscalaC implements Nomina {
 
 	@Override
 	public float calcularNomina() {
-		return 1100;
+		return 900;
 	}
+	
 }
