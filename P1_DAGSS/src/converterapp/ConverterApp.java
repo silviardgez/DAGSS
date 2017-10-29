@@ -14,7 +14,9 @@ public class ConverterApp {
 
 		Transformer transformer = new TABToXMLTransformer();
 		Reader reader = new FileReader(input);
-		Writer writer = new FileWriter(output);
+		//Writer writer = new FileWriter(output);
+		//Para mostrarlo por pantalla
+		Writer writer = new ConsoleWriter();
 
 		Converter converter = new Converter(reader, transformer, writer);
 
