@@ -20,10 +20,18 @@ public abstract class App implements Observer {
 	@Override
 	public void update(Observable observable, Object arg) {
 		Operation observado = (Operation) observable;
-		this.cuenta = this.cuenta + (observado.getProgress() == 100 ? -1 : 1);
+		this.cuenta = this.cuenta + (observado.getProgress() == 0 ? 1 : 0);
+		this.cuenta = this.cuenta + (observado.getProgress() == 100 ? -1 : 0);
 
 		try {
-			Logger.getInstance().log("Programa " + (observado.getProgress() == 100 ? "finalizado" : "iniciado"),
+			if(observado.getProgress() == 100){
+				Logger.getInstance().log("Programa " + observado.getName() + " finalizado.",
+						Logger.INFO);	
+			} else if(observado.getProgress() == 0){
+				Logger.getInstance().log("Programa " + observado.getName() + " iniciado.",
+						Logger.INFO);	
+			}
+			Logger.getInstance().log("Progreso del programa: " + observado.getProgress() + "%",
 					Logger.INFO);
 			Logger.getInstance().log(cuenta + " programas en curso", Logger.INFO);
 		} catch (FileNotFoundException e) {
@@ -39,7 +47,7 @@ public abstract class App implements Observer {
 			// Se guardan las operaciones disponibles y se muestran por pantalla
 			operations = createOperations();
 			operation = new Operation[operations.size()];
-			
+
 			int i = 0;
 			for (Operation op : operations) {
 				operation[i] = op;
@@ -95,7 +103,6 @@ public abstract class App implements Observer {
 							Logger.INFO);
 				}
 			}
-
 
 		}
 
